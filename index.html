@@ -1,1 +1,259 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>❄️ Happy Birthday Azel ❄️</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #0c1445 0%, #1a237e 50%, #0d47a1 100%);
+            min-height: 100vh;
+            position: relative;
+            color: white;
+        }
+
+        /* Snow Animation */
+        .snowflakes { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+        .snowflake { position: absolute; top: -10px; color: white; animation: fall linear infinite; opacity: 0.8; }
+        @keyframes fall { to { transform: translateY(100vh) rotate(360deg); } }
+
+        /* Magic Particles */
+        .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; }
+        .particle { position: absolute; width: 4px; height: 4px; background: radial-gradient(circle, rgba(173, 216, 230, 0.9), transparent); border-radius: 50%; animation: float 8s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0) translateX(0); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateY(-100vh) translateX(50px); } }
+
+        /* Sections */
+        .section { display: none; min-height: 100vh; justify-content: center; align-items: center; flex-direction: column; padding: 20px; position: relative; z-index: 10; text-align: center; }
+        .section.active { display: flex; animation: fadeInUp 1s ease-out; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Gate Section */
+        .gate-container { text-align: center; max-width: 500px; }
+        .ice-castle { font-size: 80px; margin-bottom: 20px; animation: glow 2s ease-in-out infinite alternate; filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.6)); }
+        @keyframes glow { from { filter: drop-shadow(0 0 10px rgba(173, 216, 230, 0.5)); } to { filter: drop-shadow(0 0 30px rgba(173, 216, 230, 1)); } }
+
+        h1 { font-family: 'Cinzel', serif; color: #e3f2fd; font-size: 2.5em; margin-bottom: 10px; text-shadow: 0 0 20px rgba(173, 216, 230, 0.8); letter-spacing: 2px; }
+        .subtitle { color: #b3e5fc; font-size: 1.1em; margin-bottom: 30px; line-height: 1.5; }
+
+        input[type="text"] {
+            padding: 15px 20px; font-size: 1.2em; border: 2px solid rgba(173, 216, 230, 0.5); border-radius: 50px;
+            background: rgba(255, 255, 255, 0.1); color: white; text-align: center; width: 100%; max-width: 300px;
+            outline: none; transition: all 0.3s; backdrop-filter: blur(10px); letter-spacing: 3px; margin-bottom: 20px;
+        }
+        input:focus { border-color: #81d4fa; box-shadow: 0 0 20px rgba(129, 212, 250, 0.5); transform: scale(1.02); }
+        input::placeholder { color: rgba(255, 255, 255, 0.4); letter-spacing: 1px; }
+
+        .btn-magic {
+            padding: 15px 40px; font-size: 1.1em; border: none; border-radius: 50px;
+            background: linear-gradient(135deg, #4fc3f7, #0288d1); color: white; cursor: pointer;
+            margin-top: 10px; transition: all 0.3s; box-shadow: 0 5px 20px rgba(79, 195, 247, 0.4);
+            font-family: 'Poppins', sans-serif; font-weight: 600; letter-spacing: 1px;
+        }
+        .btn-magic:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(79, 195, 247, 0.6); }
+
+        /* Message Card & Photo Frame */
+        .message-card {
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); border-radius: 30px;
+            padding: 40px; max-width: 600px; border: 2px solid rgba(173, 216, 230, 0.3);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3); animation: slideIn 1s ease-out;
+        }
+        @keyframes slideIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+
+        .photo-frame {
+            width: 180px; height: 180px; margin: 0 auto 25px auto; border-radius: 50%;
+            border: 4px solid rgba(173, 216, 230, 0.8); overflow: hidden;
+            box-shadow: 0 0 30px rgba(129, 212, 250, 0.5); position: relative;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .photo-frame img { width: 100%; height: 100%; object-fit: cover; }
+
+        .greeting { font-family: 'Cinzel', serif; color: #e3f2fd; font-size: 2em; margin-bottom: 15px; }
+        .message-text { color: #b3e5fc; line-height: 1.8; font-size: 1.1em; text-align: center; margin-bottom: 30px; }
+        .highlight { color: #81d4fa; font-weight: 600; }
+
+        /* Hold Button */
+        .hold-btn {
+            position: relative; padding: 20px 50px; font-size: 1.2em; border: 3px solid #81d4fa;
+            border-radius: 50px; background: transparent; color: white; cursor: pointer;
+            overflow: hidden; transition: all 0.3s; font-family: 'Poppins', sans-serif;
+            font-weight: 600; user-select: none; -webkit-user-select: none;
+        }
+        .hold-progress {
+            position: absolute; bottom: 0; left: 0; height: 100%;
+            background: linear-gradient(90deg, #4fc3f7, #0288d1); width: 0%;
+            transition: width 0.1s linear; z-index: -1; opacity: 0.8;
+        }
+        .hold-btn:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(129, 212, 250, 0.5); }
+
+        /* Love Meter */
+        .love-container { text-align: center; max-width: 500px; }
+        .love-question { color: #e3f2fd; font-size: 1.8em; margin-bottom: 30px; font-family: 'Cinzel', serif; }
+        input[type="range"] { width: 100%; height: 10px; border-radius: 10px; background: rgba(255, 255, 255, 0.2); outline: none; -webkit-appearance: none; }
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(135deg, #4fc3f7, #0288d1); cursor: pointer; box-shadow: 0 0 20px rgba(79, 195, 247, 0.8); }
+        .percentage { font-size: 3em; color: #81d4fa; font-weight: 700; margin: 20px 0; text-shadow: 0 0 20px rgba(129, 212, 250, 0.8); }
+
+        /* Music Player */
+        .music-player { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); border-radius: 20px; padding: 30px; max-width: 400px; border: 2px solid rgba(173, 216, 230, 0.3); text-align: center; }
+        .play-btn { width: 80px; height: 80px; border-radius: 50%; border: 3px solid #81d4fa; background: transparent; color: white; font-size: 30px; cursor: pointer; transition: all 0.3s; margin: 20px auto; display: flex; align-items: center; justify-content: center; }
+        .playing { animation: rotate 3s linear infinite; }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* Final Section */
+        .thank-you { font-family: 'Cinzel', serif; color: #e3f2fd; font-size: 2.5em; margin-bottom: 20px; }
+        .sparkle { display: inline-block; animation: sparkle 1.5s ease-in-out infinite; }
+        @keyframes sparkle { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.2); } }
+        
+        .creator-tag {
+            margin-top: 40px;
+            padding: 15px 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50px;
+            border: 1px solid rgba(173, 216, 230, 0.3);
+            font-size: 0.9em;
+            color: #81d4fa;
+            letter-spacing: 1px;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @media (max-width: 768px) { h1 { font-size: 1.8em; } .greeting { font-size: 1.5em; } .message-card { padding: 25px; } .photo-frame { width: 150px; height: 150px; } }
+    </style>
+</head>
+<body>
+    <div class="snowflakes" id="snowflakes"></div>
+    <div class="particles" id="particles"></div>
+
+    <!-- Section 1: Gate -->
+    <div class="section active" id="section1">
+        <div class="gate-container">
+            <div class="ice-castle">🏰</div>
+            <h1>GERBANG ES ELSA</h1>
+            <p class="subtitle">Masukkan tanggal lahir kamu (DDMMYY)<br>untuk membuka ✨</p>
+            <input type="text" id="birthdate" placeholder="DDMMYY" maxlength="6" inputmode="numeric">
+            <button class="btn-magic" onclick="checkGate()">Buka Gerbang ❄️</button>
+            <p id="errorMsg" style="color: #ff8a80; margin-top: 15px; display: none; font-weight: 500;"></p>
+        </div>
+    </div>
+
+    <!-- Section 2: Greeting -->
+    <div class="section" id="section2">
+        <div class="message-card">
+            <h2 class="greeting">Hai Elsa Raisa Shafitri ✨</h2>
+            <p class="message-text">Tahan tombol di bawah ini sebentar ya... 🎁<br>Jangan dilepas sampai penuh!</p>
+            <button class="hold-btn" id="holdBtn1" onmousedown="startHold()" onmouseup="stopHold()" onmouseleave="stopHold()" ontouchstart="startHold()" ontouchend="stopHold()">
+                <div class="hold-progress" id="progress1"></div>Tahan Aku! ❄️
+            </button>
+        </div>
+    </div>
+
+    <!-- Section 3: Main Message WITH PHOTO -->
+    <div class="section" id="section3">
+        <div class="message-card">
+            <!-- FOTO AZEL DI SINI -->
+            <div class="photo-frame">
+                <!-- GANTI LINK DI BAWAH INI DENGAN LINK FOTO ASLI -->
+                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&h=400&fit=crop" alt="Foto Azel" id="azelPhoto">
+            </div>
+            
+            <h2 class="greeting">Kado Spesial Buat Azel </h2>
+            <div class="message-text">
+                <p><span class="highlight">Dear Azel,</span></p><br>
+                <p>Selamat ulang tahun yang ke-15 ya! 🎉</p><br>
+                <p>Di usia yang baru ini, semoga setiap langkahmu selalu dimudahkan oleh-Nya. Semoga kamu terus dikelilingi kebahagiaan, kesehatan, dan orang-orang yang tulus menyayangimu.</p><br>
+                <p>Semoga semua cita-cita dan impianmu perlahan-lahan menjadi kenyataan. Tetap jadi <span class="highlight">Azel</span> yang baik, ceria, kuat, dan bersinar seperti Ratu Elsa! ✨</p><br>
+                <p>Jangan pernah ragu untuk bermimpi besar, karena kamu punya potensi yang luar biasa. Dunia ini menanti keajaiban yang akan kamu ciptakan. 💙</p><br>
+                <p style="font-size: 1.3em; margin-top: 20px;">HADIAH SPESIAL DARI:<br><span class="highlight" style="font-size: 1.5em;">✨ Atar ✨</span></p>
+            </div>
+            <button class="hold-btn" id="holdBtn2" onmousedown="startHold2()" onmouseup="stopHold2()" onmouseleave="stopHold2()" ontouchstart="startHold2()" ontouchend="stopHold2()">
+                <div class="hold-progress" id="progress2"></div>Lanjutkan ❄️
+            </button>
+        </div>
+    </div>
+
+    <!-- Section 4: Love Meter -->
+    <div class="section" id="section4">
+        <div class="love-container">
+            <h2 class="love-question">Seberapa persen sayang kamu ke Atar? 🙈</h2>
+            <input type="range" id="loveSlider" min="0" max="100" value="50" oninput="updateLove(this.value)">
+            <div class="percentage" id="lovePercent">50%</div>
+            <p style="color: #b3e5fc; font-size: 1.2em; margin-top: 20px;">Kamu sayang Atar gak, Azel? 🥺</p>
+            <button class="btn-magic" onclick="goToMusic()" style="margin-top: 30px;">Lanjut 🎶</button>
+        </div>
+    </div>
+
+    <!-- Section 5: Music -->
+    <div class="section" id="section5">
+        <div class="music-player">
+            <div style="font-size: 60px; margin-bottom: 20px;">🎵</div>
+            <h2 style="color: #e3f2fd; font-family: 'Cinzel', serif; margin-bottom: 10px;">Lagu Khusus Azel</h2>
+            <p style="color: #b3e5fc; margin-bottom: 20px;">Dengarkan lagu pilihan ini ya</p>
+            <button class="play-btn" id="playBtn" onclick="toggleMusic()">▶</button>
+            <audio id="bgMusic" loop><source src="your-song.mp3" type="audio/mpeg"></audio>
+            <button class="btn-magic" onclick="goToFinal()" style="margin-top: 20px;">Selesai ❄️</button>
+        </div>
+    </div>
+
+    <!-- Section 6: Final -->
+    <div class="section" id="section6">
+        <div class="final-message">
+            <h2 class="thank-you">Terima Kasih Ya! <span class="sparkle">❄️</span><span class="sparkle">✨</span></h2>
+            <p class="message-text" style="font-size: 1.3em;">Makasih udah membaca pesan ini sampai selesai, Azel.<br>Semoga hari-harimu selalu menyenangkan! 💙</p>
+            <div style="font-size: 60px; margin-top: 30px; animation: glow 2s ease-in-out infinite alternate;">👑️💙</div>
+            
+            <!-- TAG PEMBUAT WEB -->
+            <div class="creator-tag">
+                Web ini aku Atar yang bikin khusus buat kamu 🤍
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Snow & Particles
+        function createSnowflakes() { const c = document.getElementById('snowflakes'); for(let i=0;i<50;i++){const s=document.createElement('div');s.className='snowflake';s.innerHTML='';s.style.left=Math.random()*100+'%';s.style.animationDuration=(Math.random()*5+5)+'s';s.style.animationDelay=Math.random()*5+'s';s.style.fontSize=(Math.random()*15+10)+'px';s.style.opacity=Math.random();c.appendChild(s);} }
+        function createParticles() { const c = document.getElementById('particles'); for(let i=0;i<30;i++){const p=document.createElement('div');p.className='particle';p.style.left=Math.random()*100+'%';p.style.top=Math.random()*100+'%';p.style.animationDelay=Math.random()*8+'s';p.style.animationDuration=(Math.random()*4+6)+'s';c.appendChild(p);} }
+        createSnowflakes(); createParticles();
+
+        // Gate Logic
+        function checkGate() {
+            const val = document.getElementById('birthdate').value.trim();
+            const err = document.getElementById('errorMsg');
+            if (val === "091011") { 
+                err.style.display = 'none'; showSection(2); 
+            } else { 
+                err.textContent = 'Tanggal lahir salah! Coba lagi ️'; err.style.display = 'block';
+                const inp = document.getElementById('birthdate'); inp.style.animation='shake 0.5s'; setTimeout(()=>inp.style.animation='',500);
+            }
+        }
+        const styleSheet = document.createElement("style"); styleSheet.innerText = `@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}`; document.head.appendChild(styleSheet);
+
+        // Navigation
+        function showSection(n) { document.querySelectorAll('.section').forEach(s=>s.classList.remove('active')); document.getElementById('section'+n).classList.add('active'); }
+
+        // Hold Buttons
+        let t1=null,p1=0;
+        function startHold(){t1=setInterval(()=>{p1+=2;document.getElementById('progress1').style.width=p1+'%';if(p1>=100){clearInterval(t1);showSection(3);}},50);}
+        function stopHold(){if(t1){clearInterval(t1);t1=null;p1=0;document.getElementById('progress1').style.width='0%';}}
+
+        let t2=null,p2=0;
+        function startHold2(){t2=setInterval(()=>{p2+=2;document.getElementById('progress2').style.width=p2+'%';if(p2>=100){clearInterval(t2);showSection(4);}},50);}
+        function stopHold2(){if(t2){clearInterval(t2);t2=null;p2=0;document.getElementById('progress2').style.width='0%';}}
+
+        // Love Slider
+        function updateLove(v){document.getElementById('lovePercent').textContent=v+'%';}
+        function goToMusic(){showSection(5);}
+
+        // Music
+        let isPlaying=false;
+        function toggleMusic(){const m=document.getElementById('bgMusic');const b=document.getElementById('playBtn');if(isPlaying){m.pause();b.textContent='▶';b.classList.remove('playing');}else{m.play().catch(e=>console.log('Audio play blocked'));b.textContent='⏸';b.classList.add('playing');}isPlaying=!isPlaying;}
+        function goToFinal(){showSection(6);}
+
+        document.getElementById('birthdate').addEventListener('keypress',e=>{if(e.key==='Enter')checkGate();});
+    </script>
+</body>
+</html>
 
