@@ -1,1 +1,725 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Lessa</title>
+    
+    <!-- EMAILJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init("K3JEBbjBdXdUIHPAY");
+        })();
+    </script>
 
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap');
+        
+        :root {
+            --primary-glow: rgba(129, 212, 250, 0.6);
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --text-main: #e3f2fd;
+            --text-sub: #b3e5fc;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, rgba(10, 20, 60, 0.85), rgba(13, 71, 161, 0.9)), 
+                        url('https://images.unsplash.com/photo-1548266652-99cf277df5c8?q=80&w=2000&auto=format&fit=crop') center/cover fixed;
+            min-height: 100vh;
+            color: var(--text-main);
+            position: relative;
+            scroll-behavior: smooth;
+        }
+
+        /* --- DECORATIONS --- */
+        .elsa-character {
+            position: fixed; bottom: -30px; right: -30px; width: 320px; height: auto;
+            z-index: 5; pointer-events: none; filter: drop-shadow(0 0 30px rgba(129, 212, 250, 0.4));
+            animation: floatElsa 5s ease-in-out infinite alternate; opacity: 0.9;
+        }
+        @keyframes floatElsa { from { transform: translateY(0) rotate(-2deg); } to { transform: translateY(-20px) rotate(2deg); } }
+
+        .snowflakes, .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; overflow: hidden; }
+        .snowflake { position: absolute; top: -10px; color: white; animation: fall linear infinite; text-shadow: 0 0 8px rgba(255,255,255,0.9); }
+        @keyframes fall { to { transform: translateY(105vh) rotate(360deg); } }
+        
+        .particle { position: absolute; width: 3px; height: 3px; background: radial-gradient(circle, rgba(173, 216, 230, 0.8), transparent); border-radius: 50%; animation: floatParticle 10s ease-in-out infinite; }
+        @keyframes floatParticle { 0%, 100% { transform: translateY(0) translateX(0); opacity: 0; } 50% { opacity: 0.8; } 100% { transform: translateY(-100vh) translateX(30px); } }
+
+        /* --- LAYOUT & SECTIONS --- */
+        .section { 
+            display: none; min-height: 100vh; justify-content: center; align-items: center; 
+            flex-direction: column; padding: 40px 20px; position: relative; z-index: 10; text-align: center; 
+            opacity: 0; transition: opacity 0.6s ease;
+        }
+        .section.active { 
+            display: flex; 
+            opacity: 1;
+            animation: fadeInUpSmooth 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards; 
+        }
+        @keyframes fadeInUpSmooth { 
+            from { opacity: 0; transform: translateY(40px) scale(0.98); } 
+            to { opacity: 1; transform: translateY(0) scale(1); } 
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h1 { font-family: 'Cinzel', serif; color: var(--text-main); font-size: 2.2em; margin-bottom: 15px; text-shadow: 0 0 25px var(--primary-glow); letter-spacing: 3px; font-weight: 700; }
+        .subtitle { color: var(--text-sub); font-size: 1em; margin-bottom: 35px; line-height: 1.6; font-weight: 300; max-width: 400px; margin-left: auto; margin-right: auto; }
+        .greeting { font-family: 'Cinzel', serif; color: var(--text-main); font-size: 1.8em; margin-bottom: 20px; text-shadow: 0 0 15px rgba(255,255,255,0.3); }
+        .message-text { color: var(--text-sub); line-height: 1.9; font-size: 1.05em; text-align: center; margin-bottom: 30px; font-weight: 300; }
+        .highlight { color: #81d4fa; font-weight: 600; letter-spacing: 1px; }
+
+        /* --- GLASS CARD --- */
+        .message-card, .gate-container, .quiz-container {
+            background: var(--glass-bg); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+            border-radius: 35px; padding: 45px 35px; max-width: 550px; width: 100%;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(255,255,255,0.05);
+            animation: slideInSmooth 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            max-height: 85vh; overflow-y: auto; 
+        }
+        .message-card::-webkit-scrollbar { width: 4px; }
+        .message-card::-webkit-scrollbar-thumb { background: rgba(129, 212, 250, 0.3); border-radius: 10px; }
+        @keyframes slideInSmooth { from { opacity: 0; transform: scale(0.95) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+
+        /* --- INPUTS & BUTTONS --- */
+        input[type="text"], input[type="password"] {
+            padding: 16px 25px; font-size: 1.1em; border: 1px solid var(--glass-border); border-radius: 50px;
+            background: rgba(255, 255, 255, 0.05); color: white; text-align: center; width: 100%; max-width: 320px;
+            outline: none; transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); backdrop-filter: blur(10px); letter-spacing: 4px; margin-bottom: 25px;
+        }
+        input:focus { border-color: #81d4fa; box-shadow: 0 0 25px var(--primary-glow); background: rgba(255, 255, 255, 0.1); transform: scale(1.02); }
+        input::placeholder { color: rgba(255, 255, 255, 0.3); letter-spacing: 2px; }
+
+        .btn-magic {
+            padding: 16px 45px; font-size: 1em; border: none; border-radius: 50px;
+            background: linear-gradient(135deg, #4fc3f7, #0288d1); color: white; cursor: pointer;
+            margin-top: 15px; transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); box-shadow: 0 5px 25px rgba(79, 195, 247, 0.3);
+            font-family: 'Poppins', sans-serif; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+        }
+        .btn-magic:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 10px 35px rgba(79, 195, 247, 0.5); }
+        .btn-magic:active { transform: translateY(-1px) scale(0.98); }
+        .btn-magic:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+        /* --- PHOTO FRAME --- */
+        .photo-frame {
+            width: 160px; height: 160px; margin: 0 auto 30px auto; border-radius: 50%;
+            border: 3px solid rgba(173, 216, 230, 0.6); overflow: hidden;
+            box-shadow: 0 0 40px rgba(129, 212, 250, 0.3); position: relative; background: rgba(255, 255, 255, 0.05);
+            transition: transform 0.4s ease;
+        }
+        .photo-frame:hover { transform: scale(1.05); }
+        .photo-frame img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* --- LOVE BUTTON --- */
+        .love-btn {
+            position: relative; width: 110px; height: 110px; border-radius: 50%;
+            border: 2px solid rgba(255, 64, 129, 0.4); background: rgba(255, 64, 129, 0.05);
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            margin: 25px auto; transition: all 0.3s ease; user-select: none; -webkit-user-select: none;
+            box-shadow: 0 0 30px rgba(255, 64, 129, 0.2); font-size: 45px; overflow: hidden;
+        }
+        .love-btn span { z-index: 2; position: relative; filter: drop-shadow(0 0 10px rgba(255,255,255,0.6)); transition: transform 0.2s; }
+        .love-btn:active span { transform: scale(0.9); }
+        .love-progress {
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 0%;
+            background: linear-gradient(to top, #ff4081, #ff80ab);
+            transition: height 0.1s linear; opacity: 0.6; border-radius: 0 0 50px 50px;
+        }
+
+        /* --- SLIDE UNLOCK --- */
+        .slide-track {
+            position: relative; width: 260px; height: 55px; border-radius: 30px;
+            background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border);
+            margin: 35px auto; user-select: none; touch-action: none;
+        }
+        .slide-text {
+            position: absolute; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+            color: rgba(255, 255, 255, 0.5); font-weight: 500; letter-spacing: 2px; font-size: 0.85em; pointer-events: none;
+        }
+        .slide-knob {
+            position: absolute; left: 5px; top: 5px; width: 45px; height: 45px; border-radius: 50%;
+            background: linear-gradient(135deg, #4fc3f7, #0288d1); display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 20px rgba(79, 195, 247, 0.4); cursor: grab; z-index: 10; transition: box-shadow 0.3s;
+        }
+        .slide-knob:active { cursor: grabbing; box-shadow: 0 0 30px rgba(79, 195, 247, 0.7); }
+        .slide-knob svg { width: 20px; height: 20px; fill: white; }
+
+        /* --- QUIZ --- */
+        .quiz-card {
+            background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); border-radius: 25px;
+            padding: 30px; border: 1px solid var(--glass-border); margin-bottom: 20px; display: none;
+        }
+        .quiz-card.active { display: block; animation: slideInSmooth 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        .question-number { color: #81d4fa; font-size: 0.8em; margin-bottom: 12px; letter-spacing: 2px; text-transform: uppercase; }
+        .question-text { font-size: 1.2em; margin-bottom: 25px; line-height: 1.5; font-weight: 500; }
+        .options-grid { display: grid; gap: 12px; }
+        .option-btn {
+            padding: 16px; border: 1px solid var(--glass-border); border-radius: 15px;
+            background: rgba(255, 255, 255, 0.03); color: white; cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            font-family: 'Poppins', sans-serif; font-size: 0.95em; text-align: left;
+        }
+        .option-btn:hover { background: rgba(129, 212, 250, 0.15); border-color: #81d4fa; transform: translateX(5px); }
+        .option-btn.correct { background: rgba(76, 175, 80, 0.2); border-color: #4CAF50; }
+        .option-btn.wrong { background: rgba(244, 67, 54, 0.2); border-color: #F44336; animation: shake 0.5s; }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
+
+        /* --- FORM --- */
+        .form-input {
+            width: 100%; padding: 16px 20px; border-radius: 15px; border: 1px solid var(--glass-border);
+            background: rgba(255, 255, 255, 0.05); color: white; font-family: 'Poppins', sans-serif;
+            outline: none; backdrop-filter: blur(5px); transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); font-size: 0.95em;
+        }
+        .form-input:focus { border-color: #81d4fa; background: rgba(255, 255, 255, 0.1); transform: translateY(-2px); }
+        textarea.form-input { resize: none; min-height: 110px; line-height: 1.5; }
+        #form-status { margin-top: 15px; font-size: 0.9em; font-weight: 500; min-height: 20px; transition: all 0.3s; }
+
+        /* --- DEV NOTE --- */
+        .dev-note {
+            background: rgba(156, 39, 176, 0.08); border: 1px dashed rgba(156, 39, 176, 0.4);
+            border-radius: 20px; padding: 30px; margin-bottom: 25px; text-align: left;
+        }
+        .dev-signature {
+            margin-top: 25px; font-size: 0.85em; color: var(--text-sub);
+            border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;
+            display: flex; justify-content: space-between; letter-spacing: 1px;
+        }
+
+        /* --- TOAST --- */
+        .toast {
+            position: fixed; top: 25px; left: 50%; transform: translateX(-50%) translateY(-100px);
+            background: rgba(244, 67, 54, 0.9); color: white; padding: 15px 30px;
+            border-radius: 50px; font-weight: 500; z-index: 1000; transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3); text-align: center; backdrop-filter: blur(10px);
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); }
+
+        /* --- MUSIC CONTROL BUTTON --- */
+        #musicBtn {
+            position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px;
+            border-radius: 50%; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2); color: white; font-size: 20px;
+            display: none; align-items: center; justify-content: center; cursor: pointer;
+            z-index: 100; transition: all 0.3s ease; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        #musicBtn:hover { background: rgba(255, 255, 255, 0.2); transform: scale(1.1); }
+        #musicBtn:active { transform: scale(0.95); }
+
+        /* --- HOME MENU GRID --- */
+        .home-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;
+            width: 100%; max-width: 500px; margin: 20px auto;
+        }
+        .home-item {
+            background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border);
+            border-radius: 20px; padding: 20px; cursor: pointer; transition: all 0.3s;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+        }
+        .home-item:hover { background: rgba(255, 255, 255, 0.15); transform: translateY(-5px); border-color: #81d4fa; }
+        .home-icon { font-size: 2em; }
+        .home-label { font-size: 0.9em; font-weight: 500; color: var(--text-sub); }
+
+        .wa-btn {
+            display: inline-flex; align-items: center; gap: 10px; padding: 15px 30px;
+            background: #25D366; color: white; border-radius: 50px; text-decoration: none;
+            font-weight: 600; margin-top: 20px; transition: all 0.3s; box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
+        }
+        .wa-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(37, 211, 102, 0.6); }
+
+        @media (max-width: 768px) { 
+            h1 { font-size: 1.8em; } .greeting { font-size: 1.5em; } .message-card { padding: 30px 20px; } 
+            .photo-frame { width: 140px; height: 140px; }
+            .elsa-character { width: 220px; bottom: -15px; right: -15px; }
+            .home-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BACKSOUND AUDIO ELEMENT -->
+    <audio id="bgMusic" loop>
+        <source src="backsound.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- MUSIC TOGGLE BUTTON -->
+    <div id="musicBtn" onclick="toggleMusic()">🎵</div>
+
+    <img src="https://upload.wikimedia.org/wikipedia/en/5/5e/Elsa_from_Disney%27s_Frozen.png" alt="Elsa Character" class="elsa-character">
+
+    <div class="snowflakes" id="snowflakes"></div>
+    <div class="particles" id="particles"></div>
+    <div id="notification" class="toast">Yahh salah! Ulang dari awal ya</div>
+
+    <!-- SECTION 1: GATE -->
+    <div id="section1" class="section active">
+        <div class="gate-container">
+            <h1>GERBANG ES ELSA</h1>
+            <p class="subtitle">Masukkan tanggal lahir kamu (DDMMYY) untuk membuka</p>
+            <input type="password" id="birthdate" placeholder="••••••" maxlength="6">
+            <button class="btn-magic" onclick="checkGate()">Buka Gerbang</button>
+            <p id="errorMsg" style="color: #ff8a80; margin-top: 15px; display: none; font-size: 0.9em;">Tanggal lahir salah! Coba lagi</p>
+        </div>
+    </div>
+
+    <!-- SECTION 2: LOVE HOLD BUTTON 1 -->
+    <div id="section2" class="section">
+        <div class="message-card">
+            <h2 class="greeting">Hai Elsa Raisa Safitri</h2>
+            <p class="subtitle">Tahan tombol hati ini sampai penuh...</p>
+            <div class="love-btn" onmousedown="startLove()" onmouseup="stopLove()" ontouchstart="startLove()" ontouchend="stopLove()">
+                <span>❤️</span>
+                <div class="love-progress" id="loveProgress"></div>
+            </div>
+            <p style="font-size: 0.85em; color: var(--text-sub); margin-top: 15px; opacity: 0.7;">(Tahan terus ya!)</p>
+        </div>
+    </div>
+
+    <!-- SECTION 3: MESSAGE CARD -->
+    <div id="section3" class="section">
+        <div class="message-card">
+            <div class="photo-frame">
+                <img src="azel.jpg" alt="Foto Lessa">
+            </div>
+            <h2 class="greeting">Kado Spesial Buat Lessa</h2>
+            <div class="message-text">
+                Dear Lessa,<br><br>
+                Selamat ulang tahun yang ke-15 ya!<br>
+                Di usia yang baru ini, semoga setiap langkahmu selalu dimudahkan oleh-Nya. Semoga kamu terus dikelilingi kebahagiaan, kesehatan, dan orang-orang yang tulus mendukungmu.<br><br>
+                
+                Aku tahu 15 tahun bukan angka yang kecil. Ini adalah masa di mana kamu mulai menemukan jati dirimu, mengejar mimpi-mimpi besar, dan belajar banyak hal tentang dunia. Tapi ingat, jangan pernah lupa untuk tetap tersenyum dan menikmati setiap prosesnya.<br><br>
+                
+                Tetap jadi Lessa yang baik, ceria, kuat, dan bersinar seperti Ratu Elsa! Jangan biarkan siapapun memadamkan cahayamu. Kamu punya potensi yang luar biasa, dan aku yakin suatu hari nanti kamu akan mencapai semua impianmu.<br><br>
+                
+                Terima kasih sudah hadir dan menjadi bagian dari cerita hidupku. Setiap momen bersama adalah kenangan berharga yang nggak bakal terlupakan.<br><br>
+                
+                Sekali lagi, Happy Birthday Lessa!<br>
+                Semoga panjang umur, sehat selalu, dan sukses dalam segala hal.<br><br>
+                <span class="highlight">DARI: Atar</span>
+            </div>
+            <button class="btn-magic" onclick="showSection(4)">Lanjutkan</button>
+        </div>
+    </div>
+
+    <!-- SECTION 4: EXCITED METER (STARTS AT 0%) -->
+    <div id="section4" class="section">
+        <div class="message-card">
+            <h2 class="greeting">Seberapa excited kamu hari ini?</h2>
+            <input type="range" min="0" max="100" value="0" class="slider" id="loveRange" oninput="updateLove(this.value)" style="width: 100%; margin: 25px 0; accent-color: #81d4fa;">
+            <h1 id="lovePercent" style="font-size: 3em; color: #81d4fa; margin: 10px 0;">0%</h1>
+            <p class="subtitle">Geser slidernya sampai penuh!</p>
+            <button class="btn-magic" onclick="goToQuiz()">Mulai Tantangan</button>
+        </div>
+    </div>
+
+    <!-- SECTION 5: QUIZ -->
+    <div id="section5" class="section">
+        <div class="quiz-container">
+            <h2 class="greeting">Elsa's Quiz</h2>
+            <p class="subtitle">Jawab bener semua biar dapet kado!</p>
+
+            <!-- Soal 1: KIMIA SMA -->
+            <div id="q1" class="quiz-card active">
+                <div class="question-number">QUESTION 1 / 2</div>
+                <div class="question-text">Dalam reaksi redoks: MnO4- + C2O4^2- -> Mn^2+ + CO2 (suasana asam). Berapa koefisien ion C2O4^2- setelah disetarakan?</div>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="checkAnswer(1, this, false)">A. 2</button>
+                    <button class="option-btn" onclick="checkAnswer(1, this, true)">B. 5</button>
+                    <button class="option-btn" onclick="checkAnswer(1, this, false)">C. 8</button>
+                    <button class="option-btn" onclick="checkAnswer(1, this, false)">D. 10</button>
+                </div>
+            </div>
+
+            <!-- Soal 2 -->
+            <div id="q2" class="quiz-card">
+                <div class="question-number">QUESTION 2 / 2</div>
+                <div class="question-text">Atar bandel ga?</div>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="checkAnswer(2, this, false)">A. IYA BANGET</button>
+                    <button class="option-btn" onclick="checkAnswer(2, this, false)">B. DASAR ATDEL</button>
+                    <button class="option-btn" onclick="checkAnswer(2, this, false)">C. NGA BANDEL</button>
+                    <button class="option-btn" onclick="checkAnswer(2, this, true)">D. OMAYGAT ATAR MA NGA BANDEL</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 6: FINAL SLIDE + FOTO KE 2 + LOVE BUTTON 2 -->
+    <div id="section6" class="section">
+        <div class="message-card">
+            <h2 class="greeting">Tahap Terakhir...</h2>
+            <div class="photo-frame" style="margin-bottom: 20px;">
+                <img src="azel.jpg" alt="Foto Lessa Kedua">
+            </div>
+            <p class="subtitle">KISS JEMPOL KANAN KAMU SEKARANG, TRUS KASI KE TOMBOL LOVE INI PLISS</p>
+            <div class="love-btn" onmousedown="startLove2()" onmouseup="stopLove2()" ontouchstart="startLove2()" ontouchend="stopLove2()">
+                <span>❤️</span>
+                <div class="love-progress" id="loveProgress2"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 7: SLIDE UNLOCK -->
+    <div id="section7" class="section">
+        <div class="message-card">
+            <h2 class="greeting">Special For You</h2>
+            <p class="subtitle">Geser ke kanan untuk buka pesan rahasia!</p>
+            <div class="slide-track" id="slideTrack">
+                <div class="slide-text">GESER KE KANAN</div>
+                <div class="slide-knob" id="slideKnob">
+                    <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 8: PESAN PERSONAL -->
+    <div id="section8" class="section">
+        <div class="message-card">
+            <h2 class="greeting">Untuk Lessa</h2>
+            <div class="message-text">
+                Hai Lessa...<br><br>
+                Website ini mungkin sederhana, tapi dibuat dengan effort khusus buat kamu. Aku cuma mau bilang makasih udah selalu positif dan supportif.<br><br>
+                
+                Seneng banget bisa kenal sama kamu, Lessa. Kamu orangnya hangat dan selalu bikin suasana jadi lebih hidup. Makasih ya udah sabar ngadepin aku yang kadang nyebelin atau bandel, hehe.<br><br>
+                
+                Di usia 15 tahun ini, aku doain semoga kamu makin percaya diri, makin pinter, dan selalu happy. Jangan ragu buat ngejar mimpi-mimpi kamu, dan inget kalau ada aku yang siap dukung kamu kapan aja.<br><br>
+                
+                You are amazing, Lessa. Keep shining and be the best version of yourself!<br><br>
+                <span class="highlight">Dari hati,<br>Atar</span>
+            </div>
+            <button class="btn-magic" onclick="showSection(9)">Lanjut ke Catatan Pembuat</button>
+        </div>
+    </div>
+
+    <!-- SECTION 9: DEV NOTE + FORM EMAILJS -->
+    <div id="section9" class="section">
+        <div class="message-card">
+            <h2 class="greeting">Tentang Website Ini</h2>
+            
+            <div class="dev-note">
+                <p class="message-text" style="text-align: left; margin-bottom: 0; font-size: 0.95em;">
+                    Hai Lessa, ini aku Atar. Hmm, aku yang buat ini just for u, aku cerita dikit ya, oh iya ini aku buat 1 bulan sebelum birthday kamu. Aku seneng banget bisa ucapin ulang tahun kamu yang ke 15 kan ya GAK SALAH KAN?? ehe, tenkyu for everything kamu orang baik teh Lessa, aku seneng banget kenal kamu, walaupun kenal nya dari anonnnagaksksk, tapi aku tetep seneng kenal nyaa, lakuin apa pun yang kamu suka selagi itu positif buat kamu kedepann okaii lakuinn yang terbaik untuk diri kamu sendirii, aku doain kamu jadi orang sukses nanti nya. Aminn, hmm terharu nulisnyaa, sekali lagii happy brithday Lessa.
+                </p>
+                
+                <div class="dev-signature">
+                    <span>From: <strong>Atar</strong></span>
+                    <span>To: <strong>Lessa</strong></span>
+                </div>
+            </div>
+
+            <!-- FORM RESPON DARI LESSA -->
+            <div style="margin-top: 30px; text-align: left;">
+                <h3 style="color: var(--text-main); margin-bottom: 20px; font-family: 'Cinzel', serif; font-size: 1.3em;">Ada pesan buat Atar?</h3>
+                <form id="contact-form" style="display: flex; flex-direction: column; gap: 15px;">
+                    <input type="text" name="from_name" class="form-input" placeholder="Nama Kamu (Opsional)" required>
+                    <textarea name="message" class="form-input" rows="4" placeholder="Tulis pesanmu di sini..." required></textarea>
+                    <button type="submit" id="send-btn" class="btn-magic" style="width: 100%;">Kirim Pesan ke Atar</button>
+                </form>
+                <p id="form-status" style="text-align: center;"></p>
+            </div>
+
+            <button class="btn-magic" onclick="showSection(10)" style="margin-top: 25px;">Selesai</button>
+        </div>
+    </div>
+
+    <!-- SECTION 10: THANK YOU -->
+    <div id="section10" class="section">
+        <h1 style="font-family: 'Cinzel', serif; color: var(--text-main); font-size: 2.8em; margin-bottom: 20px; animation: thankYouPop 1s ease-out;">Thank Youu!</h1>
+        <p class="subtitle">Senang banget kamu suka! Semoga hari-harimu selalu menyenangkan!</p>
+        <p style="margin-top: 25px; font-size: 0.85em; opacity: 0.6; letter-spacing: 1px;">Web ini aku Atar yang bikin khusus buat kamu</p>
+        <button class="btn-magic" onclick="showSection(11)" style="margin-top: 30px;">Ke Beranda</button>
+    </div>
+
+    <!-- SECTION 11: BERANDA / HOME MENU -->
+    <div id="section11" class="section">
+        <div class="message-card" style="max-width: 600px;">
+            <h2 class="greeting">Menu Utama 🏠</h2>
+            <p class="subtitle">Mau lihat bagian mana lagi nih?</p>
+            
+            <div class="home-grid">
+                <div class="home-item" onclick="showSection(1)">
+                    <span class="home-icon">🔒</span>
+                    <span class="home-label">Gerbang Es</span>
+                </div>
+                <div class="home-item" onclick="showSection(2)">
+                    <span class="home-icon">❤️</span>
+                    <span class="home-label">Tombol Cinta</span>
+                </div>
+                <div class="home-item" onclick="showSection(3)">
+                    <span class="home-icon">🎁</span>
+                    <span class="home-label">Kado Ucapan</span>
+                </div>
+                <div class="home-item" onclick="showSection(4)">
+                    <span class="home-icon">📊</span>
+                    <span class="home-label">Excited Meter</span>
+                </div>
+                <div class="home-item" onclick="showSection(5)">
+                    <span class="home-icon">🧪</span>
+                    <span class="home-label">Kuis Kimia</span>
+                </div>
+                <div class="home-item" onclick="showSection(6)">
+                    <span class="home-icon">💋</span>
+                    <span class="home-label">Love Button 2</span>
+                </div>
+                <div class="home-item" onclick="showSection(7)">
+                    <span class="home-icon">🔓</span>
+                    <span class="home-label">Slide Unlock</span>
+                </div>
+                <div class="home-item" onclick="showSection(8)">
+                    <span class="home-icon">💌</span>
+                    <span class="home-label">Pesan Rahasia</span>
+                </div>
+                <div class="home-item" onclick="showSection(9)">
+                    <span class="home-icon">📝</span>
+                    <span class="home-label">Catatan Atar</span>
+                </div>
+            </div>
+
+            <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
+                <p class="subtitle" style="margin-bottom: 15px;">Mau chat langsung sama Atar?</p>
+                <!-- NOMOR WA SUDAH DIUPDATE -->
+                <a href="https://wa.me/628815954810?text=Halo%20Atar,%20makasih%20ya%20udah%20buat%20website%20kejutannya!" target="_blank" class="wa-btn">
+                    <span>💬</span> Chat WhatsApp
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // BACKSOUND LOGIC
+        const bgMusic = document.getElementById('bgMusic');
+        const musicBtn = document.getElementById('musicBtn');
+        let musicStarted = false;
+
+        function startMusic() {
+            if (!musicStarted) {
+                bgMusic.volume = 0.4;
+                bgMusic.play().then(() => {
+                    musicStarted = true;
+                    musicBtn.style.display = 'flex';
+                }).catch(error => {
+                    console.log("Autoplay dicegah browser.");
+                });
+            }
+        }
+
+        function toggleMusic() {
+            if (bgMusic.paused) {
+                bgMusic.play();
+                musicBtn.textContent = '🎵';
+            } else {
+                bgMusic.pause();
+                musicBtn.textContent = '🔇';
+            }
+        }
+
+        function createSnowflakes() {
+            const container = document.getElementById('snowflakes');
+            for (let i = 0; i < 60; i++) {
+                const s = document.createElement('div');
+                s.className = 'snowflake';
+                s.textContent = '❄';
+                s.style.left = Math.random() * 100 + '%';
+                s.style.animationDuration = Math.random() * 3 + 3 + 's';
+                s.style.opacity = Math.random() * 0.6 + 0.2;
+                s.style.fontSize = Math.random() * 12 + 8 + 'px';
+                container.appendChild(s);
+            }
+        }
+        createSnowflakes();
+
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 25; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.top = Math.random() * 100 + '%';
+                p.style.animationDelay = Math.random() * 8 + 's';
+                container.appendChild(p);
+            }
+        }
+        createParticles();
+
+        // Enhanced smooth section transition
+        function showSection(n) {
+            document.querySelectorAll('.section').forEach(s => {
+                s.classList.remove('active');
+                s.style.opacity = '0';
+            }); 
+            
+            setTimeout(() => {
+                const target = document.getElementById('section'+n);
+                target.classList.add('active');
+                void target.offsetWidth; 
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            }, 100);
+        }
+
+        function checkGate() {
+            const val = document.getElementById('birthdate').value.trim();
+            const err = document.getElementById('errorMsg');
+            if (val === "091011") { 
+                err.style.display = 'none'; 
+                startMusic(); 
+                showSection(2); 
+            } 
+            else { 
+                err.textContent = 'Tanggal lahir salah! Coba lagi'; err.style.display = 'block';
+            }
+        }
+
+        let loveTimer, loveProg = 0;
+        function startLove() {
+            const progress = document.getElementById('loveProgress');
+            progress.style.display = 'block';
+            loveTimer = setInterval(() => {
+                loveProg += 2;
+                progress.style.height = loveProg + '%';
+                if(loveProg >= 100) { clearInterval(loveTimer); showSection(3); }
+            }, 40);
+        }
+        function stopLove() {
+            clearInterval(loveTimer); loveProg = 0;
+            document.getElementById('loveProgress').style.height = '0%';
+        }
+
+        let loveTimer2, loveProg2 = 0;
+        function startLove2() {
+            const progress = document.getElementById('loveProgress2');
+            progress.style.display = 'block';
+            loveTimer2 = setInterval(() => {
+                loveProg2 += 2;
+                progress.style.height = loveProg2 + '%';
+                if(loveProg2 >= 100) { clearInterval(loveTimer2); showSection(7); }
+            }, 40);
+        }
+        function stopLove2() {
+            clearInterval(loveTimer2); loveProg2 = 0;
+            document.getElementById('loveProgress2').style.height = '0%';
+        }
+
+        function updateLove(v){document.getElementById('lovePercent').textContent=v+'%';}
+        function goToQuiz(){showSection(5);}
+
+        function checkAnswer(qNum, btn, isCorrect) {
+            const currentCard = document.getElementById('q' + qNum);
+            const buttons = currentCard.querySelectorAll('.option-btn');
+            buttons.forEach(b => b.style.pointerEvents = 'none');
+
+            if (isCorrect) {
+                btn.classList.add('correct');
+                setTimeout(() => {
+                    if (qNum < 2) { 
+                        currentCard.classList.remove('active');
+                        document.getElementById('q' + (qNum + 1)).classList.add('active');
+                    } else {
+                        showSection(6);
+                    }
+                }, 800);
+            } else {
+                btn.classList.add('wrong');
+                setTimeout(() => {
+                    const toast = document.getElementById('notification');
+                    toast.classList.add('show');
+                    setTimeout(() => {
+                        toast.classList.remove('show');
+                        document.querySelectorAll('.quiz-card').forEach(c => c.classList.remove('active'));
+                        document.getElementById('q1').classList.add('active');
+                        buttons.forEach(b => { b.classList.remove('wrong', 'correct'); b.style.pointerEvents = 'auto'; });
+                        showSection(1);
+                    }, 2000);
+                }, 500);
+            }
+        }
+
+        const track = document.getElementById('slideTrack');
+        const knob = document.getElementById('slideKnob');
+        let isDragging = false;
+        let startX;
+
+        function startDrag(e) {
+            isDragging = true;
+            startX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+        }
+
+        function doDrag(e) {
+            if (!isDragging) return;
+            const clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+            const diff = clientX - startX;
+            if(Math.abs(diff) > 10 && e.type.includes('touch')) e.preventDefault();
+
+            const maxMove = track.offsetWidth - knob.offsetWidth - 10;
+            if (diff >= 0 && diff <= maxMove) {
+                knob.style.left = (diff + 5) + 'px';
+            } else if (diff > maxMove) {
+                knob.style.left = (maxMove + 5) + 'px';
+                finishSlide();
+            }
+        }
+
+        function endDrag() {
+            if (!isDragging) return;
+            isDragging = false;
+            const currentLeft = parseInt(knob.style.left || 5);
+            if (currentLeft < (track.offsetWidth - knob.offsetWidth - 20)) {
+                knob.style.left = '5px';
+            }
+        }
+
+        function finishSlide() {
+            isDragging = false;
+            setTimeout(() => { showSection(8); knob.style.left = '5px'; }, 300);
+        }
+
+        knob.addEventListener('mousedown', startDrag);
+        knob.addEventListener('touchstart', startDrag);
+        document.addEventListener('mousemove', doDrag);
+        document.addEventListener('touchmove', doDrag, { passive: false });
+        document.addEventListener('mouseup', endDrag);
+        document.addEventListener('touchend', endDrag);
+
+        // EMAILJS SEND FUNCTION
+        document.getElementById('contact-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const btn = document.getElementById('send-btn');
+            const status = document.getElementById('form-status');
+            
+            btn.textContent = 'Mengirim...';
+            btn.disabled = true;
+            btn.style.opacity = '0.7';
+            
+            emailjs.sendForm('service_1admvdp', 'template_m25ocon', this)
+                .then(() => {
+                    status.textContent = 'Pesan berhasil dikirim ke Atar! Makasih ya Lessa';
+                    status.style.color = '#4CAF50';
+                    btn.textContent = 'Terkirim!';
+                    this.reset();
+                    
+                    setTimeout(() => {
+                        btn.textContent = 'Kirim Pesan ke Atar';
+                        btn.disabled = false;
+                        btn.style.opacity = '1';
+                        status.textContent = '';
+                    }, 5000);
+                }, (error) => {
+                    status.textContent = 'Gagal mengirim. Coba lagi ya...';
+                    status.style.color = '#F44336';
+                    btn.textContent = 'Kirim Pesan ke Atar';
+                    btn.disabled = false;
+                    btn.style.opacity = '1';
+                    console.error('EmailJS Error:', error);
+                });
+        });
+
+        document.getElementById('birthdate').addEventListener('keypress',e=>{if(e.key==='Enter')checkGate();});
+    </script>
+</body>
+</html>
